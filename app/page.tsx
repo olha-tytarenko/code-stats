@@ -1,63 +1,76 @@
-import Image from "next/image";
+import { Fragment } from 'react';
+import { BookOpenCheck, ArrowRight, ShieldCheck } from 'lucide-react';
+
+import { UserList, UserAutocomplete } from '@/features/users/components';
+import { HOW_TO_USE_STEPS } from '@/app/get-started-config';
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className='bg-zinc-50 font-sans dark:bg-black'>
+      <main>
+        <div className='flex flex-col justify-center items-center gap-6 py-32 px-18 bg-linear-65 from-(--accent-soft) via-white to-(--accent-muted)  dark:bg-black'>
+          <h2 className='text-5xl'>GitHub Engineering Insights</h2>
+          <p className='text-muted-foreground'>
+            Explore developer activity, repository metrics, and contribution patterns - all in one
+            place.
           </p>
+          <UserAutocomplete />
+          <div className='flex items-start'>
+            <div className='rounded-full bg-(--accent-muted) p-2'>
+              <BookOpenCheck className='text-primary size-4' />
+            </div>
+            <p className='text-muted-foreground text-center'>
+              Enter a GitHub username or organization to analize repositories, commits, pull
+              requests, and contributor activity.
+            </p>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className='p-10'>
+          <h3 className='text-3xl text-center p-8'>How it works</h3>
+          <ul className='flex items-baseline py-10 gap-2'>
+            {HOW_TO_USE_STEPS.map((step, index) => {
+              const Icon = step.icon;
+              return (
+                <Fragment key={index}>
+                  <li key={index} className='flex flex-col items-center justify-center gap-2'>
+                    <span className={`${step.classNames} p-3 rounded-lg`}>
+                      <Icon className='size-8' />
+                    </span>
+                    <span className='text-center text-sm'>{step.description}</span>
+                  </li>
+                  {!(index === HOW_TO_USE_STEPS.length - 1) && (
+                    <li className='flex items-center min-w-24'>
+                      <span className='text-muted'>-----</span>
+                      <ArrowRight className='size-4 text-muted-foreground' />
+                      <span className='text-muted'>-----</span>
+                    </li>
+                  )}
+                </Fragment>
+              );
+            })}
+          </ul>
+          <h3 className='text-3xl text-center p-8'>Try with</h3>
+          <p className='text-muted-foreground text-center pb-8'>
+            Explore insights from some of the world&#39;s most active developers and organization
+          </p>
+          <div>
+            <UserList />
+          </div>
+        </div>
+        <div className='bg-(--accent-soft) p-4 m-8 flex items-center gap-6 rounded-lg'>
+          <ShieldCheck className='text-primary' />
+          <div>
+            <h5>Data you can trust</h5>
+            <p className='text-muted-foreground text-xs'>
+              All data is fetched from the official GitHub API.
+            </p>
+            <p className='text-muted-foreground text-xs'>We don&#39;t store your data</p>
+          </div>
+          <Button variant='outline' className='ml-auto'>
+            Lear more about GitHub API -&gt;
+          </Button>
         </div>
       </main>
     </div>
